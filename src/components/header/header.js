@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { jsx, Container, Flex, Button } from 'theme-ui';
+import { jsx, Container, Flex, Button, Link as A } from 'theme-ui';
 import { keyframes } from '@emotion/core';
 import { Link } from 'react-scroll';
 import Logo from 'components/logo';
@@ -7,10 +7,12 @@ import LogoDark from 'assets/techvestors-logo.png';
 import { DrawerProvider } from '../../contexts/drawer/drawer.provider';
 import MobileDrawer from './mobile-drawer';
 import menuItems from './header.data';
+import menuCareerItems from './header.career';
 import { useRouter } from 'next/router';
 
 export default function Header({ className }) {
   const router = useRouter();
+  console.log(router.pathname === '/career');
 
   return (
     <DrawerProvider>
@@ -19,26 +21,54 @@ export default function Header({ className }) {
           <Logo src={LogoDark} />
 
           <Flex as="nav" sx={styles.nav}>
-            {menuItems.map(({ path, label }, i) => (
-              <Link
-                activeClass="active"
-                to={path}
-                spy={true}
-                smooth={true}
-                offset={-30}
-                duration={500}
-                key={i}
-              >
-                {label}
-              </Link>
-            ))}
+            {router.pathname === '/career'
+              ? menuCareerItems.map(({ path, label }, i) => (
+                  <Link
+                    activeClass="active"
+                    to={path}
+                    spy={true}
+                    smooth={true}
+                    offset={-30}
+                    duration={500}
+                    key={i}
+                  >
+                    {label}
+                  </Link>
+                ))
+              : menuItems.map(({ path, label }, i) => (
+                  <Link
+                    activeClass="active"
+                    to={path}
+                    spy={true}
+                    smooth={true}
+                    offset={-30}
+                    duration={500}
+                    key={i}
+                  >
+                    {label}
+                  </Link>
+                ))}
           </Flex>
 
-          <Button className="join__us" onClick={() => router.push('/career')}>
-            Join Us
-          </Button>
+          {router.pathname === '/' && (
+            <Button className="join__us" onClick={() => router.push('/career')}>
+              Join Us
+            </Button>
+          )}
 
-          <MobileDrawer />
+          {router.pathname === '/career' && (
+            <A
+              className="join__us"
+              href="/www.linkedin.com"
+              sx={{
+                textDecoration: 'none',
+              }}
+            >
+              Apply
+            </A>
+          )}
+
+          <MobileDrawer isCareer={router.pathname === '/career'} />
         </Container>
       </header>
     </DrawerProvider>

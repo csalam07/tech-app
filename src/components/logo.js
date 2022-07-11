@@ -1,11 +1,12 @@
 /** @jsx jsx */
 import { jsx, Image } from 'theme-ui';
-import { Link } from 'components/link';
+// import { Link } from 'components/link';
+import Link from 'next/link';
 
 export default function Logo({ src, ...rest }) {
   return (
     <Link
-      path="/"
+      href="/"
       sx={{
         variant: 'links.logo',
         display: 'flex',
@@ -14,7 +15,13 @@ export default function Logo({ src, ...rest }) {
       }}
       {...rest}
     >
-      <Image src={src} alt="techvestors" />
+      <Image
+        src={src}
+        alt="techvestors"
+        sx={{
+          cursor: 'pointer',
+        }}
+      />
     </Link>
   );
 }

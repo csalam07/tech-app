@@ -7,6 +7,7 @@ import { IoMdClose, IoMdMenu } from 'react-icons/io';
 import { Link } from 'react-scroll';
 import { FaFacebookF, FaTwitter, FaGithubAlt } from 'react-icons/fa';
 import menuItems from './header.data';
+import menuCareerItems from './header.career';
 
 const social = [
   {
@@ -23,7 +24,7 @@ const social = [
   },
 ];
 
-const MobileDrawer = () => {
+const MobileDrawer = ({ isCareer }) => {
   const { state, dispatch } = useContext(DrawerContext);
 
   // Toggle drawer
@@ -50,20 +51,35 @@ const MobileDrawer = () => {
       <Scrollbars autoHide>
         <Box sx={styles.mobileDrawer__content}>
           <Box sx={styles.menu}>
-            {menuItems.map(({ path, label }, i) => (
-              <Link
-                activeClass="active"
-                to={path}
-                spy={true}
-                smooth={true}
-                offset={-70}
-                duration={500}
-                onClick={toggleHandler}
-                key={i}
-              >
-                {label}
-              </Link>
-            ))}
+            {isCareer
+              ? menuCareerItems.map(({ path, label }, i) => (
+                  <Link
+                    activeClass="active"
+                    to={path}
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
+                    onClick={toggleHandler}
+                    key={i}
+                  >
+                    {label}
+                  </Link>
+                ))
+              : menuItems.map(({ path, label }, i) => (
+                  <Link
+                    activeClass="active"
+                    to={path}
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}
+                    onClick={toggleHandler}
+                    key={i}
+                  >
+                    {label}
+                  </Link>
+                ))}
           </Box>
 
           <Box sx={styles.menu__Footer}>
